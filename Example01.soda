@@ -1,0 +1,8 @@
+import Sys;
+package Example {
+
+    var str : String = "Hello, World!";
+    Sys.print(str);
+
+    var num : Int = 5;
+}

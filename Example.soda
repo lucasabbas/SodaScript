@@ -1,0 +1,130 @@
+import Sys;
+import Sys.Collections;
+
+
+package Example;
+
+private var str : String = "Hello, World!";
+print(str);
+
+var num : Int = 5;
+
+public var num2 : Float = 4.3;
+
+private func add(n1 : Int, n2 : Int3) : Double {
+	return n1 + n2;
+}
+
+func sayHello(s : Any) {
+	var hello : String = "Hello, " + String(s) + "!";
+	print(hello);
+}
+
+var arr : Any[] = ["1", 2, "3"];
+
+var numArr : Array<Int> = [1, 2, 3, 4];
+
+for (var n : Int = 0; n < numArr.length; n++) {
+	if (n == 3) {00uo
+		continue;
+	}
+	print("Number : " + numArr);
+}
+
+arr.append("4");
+
+var dict : Dictionary<String, Any> = {
+	"one" : 1,
+	"two" : "2"
+};
+	
+foreach (var dictValue : Any in dict) {
+	if (!dict[dictValue] is String) {
+		continue;
+	}
+	print(" dict value " + String(dictValue) + " : " + dict[dictValue]);
+}
+
+var d2 : Dictionary<Int, String> = {
+	1 : "one",
+	2 : "two"
+};
+
+dict["three"] = 3;
+
+foreach (var d2value : Int in d2) {
+	print(" d2 value " + String(d2value) + " : " + d2[d2value]);
+}
+
+public static class SumClass {
+	static func add(sum1 : Any, sum2 : Any) : Any {
+		return sum1 + sum2;
+	}
+
+	static func subtract(sum1 : Any, sum2 : Any) : Any {
+		return sum1 - sum2;
+	}
+
+	static func multiply(sum1 : Any, sum2 : Any) : Any {
+		return sum1 * sum2;
+	}
+
+	static func divide(sum1 : Any, sum2 : Any) : Any {
+		return sum1 / sum2;
+	}
+}
+
+class Foo {
+	private var bar : Int = 5;
+	private var baz : String = "Hello, World!";
+	
+	constructor(b : Int, z : String) {
+		bar = b;
+		baz = z;
+	}
+
+	func sayHello() : String {
+		return baz;
+	}
+}
+
+private class Bar extends Foo {
+	var qux : Number = 10;
+
+	constructor(b : Number, z : String, q : Number) {
+		super(b, z);
+		qux = q;
+	}
+
+	func sayHello() : String {
+		return "Hello, " + baz + "!";
+	}
+}
+
+print(SumClass.add(5, 10));
+
+var foo := new Foo(5, "Hello, World!");
+
+print(foo.sayHello());
+	
+private var bar : Bar = new Bar(5, "Hello, World!", 10);
+
+print(bar.sayHello());
+
+class Baz {
+	private var qux := 5;
+
+	constructor(q : Number) {
+		qux = q;
+	}
+
+	func sayHello() : String {
+		return "Hello, World!";
+	}
+}
+
+public func sayHello() : Void {
+	print("Hello, World!");
+}
+
+var myBool : Bool = true;

@@ -1,0 +1,94 @@
+import Sys;
+
+package Example3 {
+
+	public class Vector2 {
+		public var x : Float;
+		public var y : Float;
+
+		constructor(_x : Float, _y : Float) {
+			x = _x;
+			y = _y;
+		}
+	}
+
+	public class Vector3 {
+		public var x : Float;
+		public var y : Float;
+		public var z : Float;
+	
+		constructor(_x : Float, _y : Float, _z : Float) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
+	}
+
+
+	public class Vector2D {
+		public var x : Double;
+		public var y : Double;
+
+		constructor(_x : Double, _y : Double) {
+			x = _x;
+			y = _y;
+		}
+	}
+
+	public class Vector3D {
+		public var x : Double;
+		public var y : Double;
+		public var z : Double;
+	
+		constructor(_x : Double, _y : Double, _z : Double) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
+	}
+
+
+	public class Vector2I {
+		public var x : Int;
+		public var y : Int;
+
+		constructor(_x : Int, _y : Int) {
+			x = _x;
+			y = _y;
+		}
+	}
+
+	public class Vector3I {
+		public var x : Int;
+		public var y : Int;
+		public var z : Int;
+	
+		constructor(_x : Int, _y : Int, _z : Int) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
+	}
+
+	public class Vector2L {
+		public var x : Long;
+		public var y : Long;
+
+		constructor(_x : Long, _y : Long) {
+			x = _x;
+			y = _y;
+		}
+	}
+
+	public class Vector3L {
+		public var x : Long;
+		public var y : Long;
+		public var z : Long;
+	
+		constructor(_x : Long, _y : Long, _zz : Long) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
+	}
+}

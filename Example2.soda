@@ -1,0 +1,14 @@
+//package Example3 : '/Example3'; 
+//package Example : '/Example';
+
+import Sys;
+import Example3.Vector3;
+//import Example.*;
+
+package;
+
+private var z : Float = Float(Example.SumClass.Add(1.0f, 2.0f));
+
+public var v := new Vector3(1.0f, 2.0f, z);
+
+print(v.toString());
