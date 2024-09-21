@@ -5,26 +5,18 @@
 #include <string>
 #include <vector>
 
+#include <memory>
+
 class TypeReference : public AstNode {
 public:
   std::string Name;
-  std::vector<TypeReference *> GenericTypes;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
 
   TypeReference(const std::string &name,
-                const std::vector<TypeReference *> &genericTypes)
-      : Name(name), GenericTypes(genericTypes) {
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->addRef();
-    }
-  }
+                const std::vector<std::shared_ptr<TypeReference>> &genericTypes)
+      : Name(name), GenericTypes(genericTypes) {}
 
-  ~TypeReference() {
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->release();
-    }
-  }
+  ~TypeReference() = default; // No need for manual memory management
 };
 
 #endif

@@ -101,6 +101,9 @@ std::vector<Token> Tokenizer::tokenize(const std::string &input) {
     column++; // Increment column for each character
   }
 
+  // Add an EndOfFile token to mark the end of the file
+  tokens.push_back(Token(EndOfFile, "", line, column));
+
   return tokens;
 }
 

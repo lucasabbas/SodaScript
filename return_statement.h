@@ -3,20 +3,16 @@
 
 #include "ast_node.h"
 #include "expression.h"
+#include <memory>
 
 class ReturnStatement : public AstNode {
 public:
-  Expression *ReturnValue;
+  std::shared_ptr<Expression> ReturnValue;
 
-  ReturnStatement(Expression *returnValue) : ReturnValue(returnValue) {
-    if (ReturnValue)
-      ReturnValue->addRef();
-  }
+  ReturnStatement(std::shared_ptr<Expression> returnValue)
+      : ReturnValue(returnValue) {}
 
-  ~ReturnStatement() {
-    if (ReturnValue)
-      ReturnValue->release();
-  }
+  ~ReturnStatement() = default; // No need for manual memory management
 };
 
 #endif // RETURN_STATEMENT_H

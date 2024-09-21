@@ -6,7 +6,7 @@
 #include <vector>
 
 // Base class for all AST nodes
-class AstNode : public RefCounted {
+class AstNode {
 public:
   virtual ~AstNode() {}
 };

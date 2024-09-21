@@ -33,7 +33,5 @@ int main() {
   // Print out the package
   std::cout << "Package: " << package.Name << std::endl;
 
-  package.release();
-
   return 0;
 }

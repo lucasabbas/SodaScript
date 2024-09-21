@@ -6,45 +6,25 @@
 #include <string>
 #include <vector>
 
+#include <memory>
 
 class ClassDeclaration : public AstNode {
 public:
   std::string Name;
   bool IsStatic;
-  TypeReference *BaseClass;
-  std::vector<TypeReference *> GenericTypes;
-  std::vector<AstNode *> Members;
+  std::shared_ptr<TypeReference> BaseClass;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
+  std::vector<std::shared_ptr<AstNode>> Members;
 
-  ClassDeclaration(const std::string &name, bool isStatic,
-                   TypeReference *baseClass,
-                   const std::vector<TypeReference *> &genericTypes,
-                   const std::vector<AstNode *> &members)
+  ClassDeclaration(
+      const std::string &name, bool isStatic,
+      std::shared_ptr<TypeReference> baseClass,
+      const std::vector<std::shared_ptr<TypeReference>> &genericTypes,
+      const std::vector<std::shared_ptr<AstNode>> &members)
       : Name(name), IsStatic(isStatic), BaseClass(baseClass),
-        GenericTypes(genericTypes), Members(members) {
-    if (BaseClass)
-      BaseClass->addRef();
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->addRef();
-    }
-    for (auto &member : Members) {
-      if (member)
-        member->addRef();
-    }
-  }
+        GenericTypes(genericTypes), Members(members) {}
 
-  ~ClassDeclaration() {
-    if (BaseClass)
-      BaseClass->release();
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->release();
-    }
-    for (auto &member : Members) {
-      if (member)
-        member->release();
-    }
-  }
+  ~ClassDeclaration() = default; // No need for manual memory management
 };
 
 #endif

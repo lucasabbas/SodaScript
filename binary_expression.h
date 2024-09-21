@@ -4,26 +4,19 @@
 #include "expression.h"
 #include "ref_counted.h"
 
+#include <memory>
+
 class BinaryExpression : public Expression {
 public:
-  Expression *Left;
+  std::shared_ptr<Expression> Left;
   std::string Operator;
-  Expression *Right;
+  std::shared_ptr<Expression> Right;
 
-  BinaryExpression(Expression *left, const std::string &op, Expression *right)
-      : Left(left), Operator(op), Right(right) {
-    if (Left)
-      Left->addRef();
-    if (Right)
-      Right->addRef();
-  }
+  BinaryExpression(std::shared_ptr<Expression> left, const std::string &op,
+                   std::shared_ptr<Expression> right)
+      : Left(left), Operator(op), Right(right) {}
 
-  ~BinaryExpression() {
-    if (Left)
-      Left->release();
-    if (Right)
-      Right->release();
-  }
+  ~BinaryExpression() = default; // No need for manual memory management
 };
 
 #endif // BINARYEXPRESSION_H

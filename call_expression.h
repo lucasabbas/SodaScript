@@ -3,41 +3,24 @@
 
 #include "expression.h"
 #include "type_reference.h"
+#include <memory>
 #include <string>
 #include <vector>
-
 
 class CallExpression : public Expression {
 public:
   std::string FunctionName;
-  std::vector<TypeReference *> GenericTypes;
-  std::vector<Expression *> Arguments;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
+  std::vector<std::shared_ptr<Expression>> Arguments;
 
-  CallExpression(const std::string &functionName,
-                 const std::vector<TypeReference *> &genericTypes,
-                 const std::vector<Expression *> &arguments)
+  CallExpression(
+      const std::string &functionName,
+      const std::vector<std::shared_ptr<TypeReference>> &genericTypes,
+      const std::vector<std::shared_ptr<Expression>> &arguments)
       : FunctionName(functionName), GenericTypes(genericTypes),
-        Arguments(arguments) {
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->addRef();
-    }
-    for (auto &arg : Arguments) {
-      if (arg)
-        arg->addRef();
-    }
-  }
+        Arguments(arguments) {}
 
-  ~CallExpression() {
-    for (auto &type : GenericTypes) {
-      if (type)
-        type->release();
-    }
-    for (auto &arg : Arguments) {
-      if (arg)
-        arg->release();
-    }
-  }
+  ~CallExpression() = default; // No need for manual memory management
 };
 
 #endif // CALLEXPRESSION_H

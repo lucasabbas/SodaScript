@@ -5,54 +5,27 @@
 #include "expression.h"
 #include "parameter.h"
 #include "type_reference.h"
+#include <memory>
 #include <string>
 #include <vector>
 
+
 class ClosureExpression : public Expression {
 public:
-  std::vector<Parameter *> Parameters;
-  TypeReference *ReturnType;
-  std::vector<AstNode *> Body;
-  std::vector<TypeReference *> GenericTypes;
+  std::vector<std::shared_ptr<Parameter>> Parameters;
+  std::shared_ptr<TypeReference> ReturnType;
+  std::vector<std::shared_ptr<AstNode>> Body;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
 
-  ClosureExpression(std::vector<Parameter *> &parameters,
-                    TypeReference *returnType, std::vector<AstNode *> &body,
-                    std::vector<TypeReference *> &genericTypes)
+  ClosureExpression(
+      const std::vector<std::shared_ptr<Parameter>> &parameters,
+      std::shared_ptr<TypeReference> returnType,
+      const std::vector<std::shared_ptr<AstNode>> &body,
+      const std::vector<std::shared_ptr<TypeReference>> &genericTypes)
       : Parameters(parameters), ReturnType(returnType), Body(body),
-        GenericTypes(genericTypes) {
-    for (auto &i : Parameters) {
-      if (i)
-        i->addRef();
-    }
-    if (ReturnType)
-      ReturnType->addRef();
-    for (auto &i : Body) {
-      if (i)
-        i->addRef();
-    }
-    for (auto &i : GenericTypes) {
-      if (i)
+        GenericTypes(genericTypes) {}
 
-        i->addRef();
-    }
-  }
-
-  ~ClosureExpression() {
-    for (auto &i : Parameters) {
-      if (i)
-        i->release();
-    }
-    if (ReturnType)
-      ReturnType->release();
-    for (auto &i : Body) {
-      if (i)
-        i->release();
-    }
-    for (auto &i : GenericTypes) {
-      if (i)
-        i->release();
-    }
-  }
+  ~ClosureExpression() = default; // No need for manual memory management
 };
 
 #endif

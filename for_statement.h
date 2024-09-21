@@ -3,42 +3,25 @@
 
 #include "ast_node.h"
 #include "expression.h"
+#include <memory>
 #include <vector>
+
 
 class ForStatement : public AstNode {
 public:
-  AstNode *Initializer;
-  Expression *Condition;
-  AstNode *Increment;
-  std::vector<AstNode *> Body;
+  std::shared_ptr<AstNode> Initializer;
+  std::shared_ptr<Expression> Condition;
+  std::shared_ptr<AstNode> Increment;
+  std::vector<std::shared_ptr<AstNode>> Body;
 
-  ForStatement(AstNode *initializer, Expression *condition, AstNode *increment,
-               std::vector<AstNode *> &body)
+  ForStatement(std::shared_ptr<AstNode> initializer,
+               std::shared_ptr<Expression> condition,
+               std::shared_ptr<AstNode> increment,
+               const std::vector<std::shared_ptr<AstNode>> &body)
       : Initializer(initializer), Condition(condition), Increment(increment),
-        Body(body) {
-    if (Initializer)
-      Initializer->addRef();
-    if (Condition)
-      Condition->addRef();
-    if (Increment)
-      Increment->addRef();
-    for (auto &i : Body) {
-      if (i)
-        i->addRef();
-    }
-  }
+        Body(body) {}
 
-  ~ForStatement() {
-    if (Initializer)
-      Initializer->release();
-    if (Condition)
-      Condition->release();
-    if (Increment)
-      Increment->release();
-    for (auto &i : Body) {
-      if (i)
-        i->release();
-    }
-  }
+  ~ForStatement() = default; // No need for manual memory management
 };
+
 #endif // FOR_STATEMENT_H

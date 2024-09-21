@@ -3,22 +3,20 @@
 
 #include "ast_node.h"
 #include "type_reference.h"
+#include <memory>
 #include <string>
 #include <vector>
+
 
 class Parameter : public AstNode {
 public:
   std::string Name;
-  TypeReference *Type;
+  std::shared_ptr<TypeReference> Type;
 
-  Parameter(std::string &name, TypeReference *type) : Name(name), Type(type) {
-    if (Type)
-      Type->addRef();
-  }
-  ~Parameter() {
-    if (Type)
-      Type->release();
-  }
+  Parameter(const std::string &name, std::shared_ptr<TypeReference> type)
+      : Name(name), Type(type) {}
+
+  ~Parameter() = default; // No need for manual memory management
 };
 
 #endif

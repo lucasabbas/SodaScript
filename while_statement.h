@@ -3,31 +3,19 @@
 
 #include "ast_node.h"
 #include "expression.h"
+#include <memory>
 #include <vector>
 
 class WhileStatement : public AstNode {
 public:
-  Expression *Condition;
-  std::vector<AstNode *> Body;
+  std::shared_ptr<Expression> Condition;
+  std::vector<std::shared_ptr<AstNode>> Body;
 
-  WhileStatement(Expression *condition, std::vector<AstNode *> &body)
-      : Condition(condition), Body(body) {
-    if (Condition)
-      Condition->addRef();
-    for (auto &i : Body) {
-      if (i)
-        i->addRef();
-    }
-  }
+  WhileStatement(std::shared_ptr<Expression> condition,
+                 const std::vector<std::shared_ptr<AstNode>> &body)
+      : Condition(condition), Body(body) {}
 
-  ~WhileStatement() {
-    if (Condition)
-      Condition->release();
-    for (auto &i : Body) {
-      if (i)
-        i->release();
-    }
-  }
+  ~WhileStatement() = default; // No need for manual memory management
 };
 
 #endif // WHILE_STATEMENT_H

@@ -4,25 +4,20 @@
 #include "ast_node.h"
 #include "expression.h"
 #include "type_reference.h"
+#include <memory>
 
 class VariableDeclaration : public AstNode {
 public:
   std::string Name;
-  TypeReference *Type;
-  Expression *Value;
+  std::shared_ptr<TypeReference> Type;
+  std::shared_ptr<Expression> Value;
 
-  VariableDeclaration(std::string &name, TypeReference *type, Expression *value)
-      : Name(name), Type(type), Value(value) {
-    if (Type)
-      Type->addRef();
-    if (Value)
-      Value->addRef();
-  }
-  ~VariableDeclaration() {
-    if (Type)
-      Type->release();
-    if (Value)
-      Value->release();
-  }
+  VariableDeclaration(const std::string &name,
+                      std::shared_ptr<TypeReference> type,
+                      std::shared_ptr<Expression> value)
+      : Name(name), Type(type), Value(value) {}
+
+  ~VariableDeclaration() = default; // No need for manual memory management
 };
+
 #endif // VARIABLE_DECLARATION_H

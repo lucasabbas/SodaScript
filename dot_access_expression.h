@@ -2,26 +2,18 @@
 #define DOT_ACCESS_EXPRESSION_H
 
 #include "expression.h"
+#include <memory>
 
 class DotAccessExpression : public Expression {
 public:
-  Expression *Left;
-  Expression *Right;
+  std::shared_ptr<Expression> Left;
+  std::shared_ptr<Expression> Right;
 
-  DotAccessExpression(Expression *left, Expression *right)
-      : Left(left), Right(right) {
-    if (Left)
-      Left->addRef();
-    if (Right)
-      Right->addRef();
-  }
+  DotAccessExpression(std::shared_ptr<Expression> left,
+                      std::shared_ptr<Expression> right)
+      : Left(left), Right(right) {}
 
-  ~DotAccessExpression() {
-    if (Left)
-      Left->release();
-    if (Right)
-      Right->release();
-  }
+  ~DotAccessExpression() = default; // No need for manual memory management
 };
 
 #endif

@@ -84,7 +84,10 @@ enum SodaScriptToken {
   // Miscellaneous
   Whitespace, // Example : "whitespace"
   Comment,    // Example : "comment"
-  GenericType // Example : "T"
+  GenericType, // Example : "T"
+
+  // End of File
+	EndOfFile
 };
 
 // Define the Token struct

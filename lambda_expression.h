@@ -5,49 +5,26 @@
 #include "expression.h"
 #include "parameter.h"
 #include "type_reference.h"
+#include <memory>
 #include <string>
 #include <vector>
 
+
 class LambdaExpression : public Expression {
 public:
-  std::vector<Parameter *> Parameters;
-  AstNode *Body;
-  TypeReference *ReturnType;
-  std::vector<TypeReference *> GenericTypes;
+  std::vector<std::shared_ptr<Parameter>> Parameters;
+  std::shared_ptr<AstNode> Body;
+  std::shared_ptr<TypeReference> ReturnType;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
 
-  LambdaExpression(std::vector<Parameter *> &parameters, AstNode *body,
-                   TypeReference *returnType,
-                   std::vector<TypeReference *> &genericTypes)
+  LambdaExpression(
+      const std::vector<std::shared_ptr<Parameter>> &parameters,
+      std::shared_ptr<AstNode> body, std::shared_ptr<TypeReference> returnType,
+      const std::vector<std::shared_ptr<TypeReference>> &genericTypes)
       : Parameters(parameters), Body(body), ReturnType(returnType),
-        GenericTypes(genericTypes) {
-    for (auto &i : Parameters) {
-      if (i)
-        i->addRef();
-    }
-    if (Body)
-      Body->addRef();
-    if (ReturnType)
-      ReturnType->addRef();
-    for (auto &i : GenericTypes) {
-      if (i)
-        i->addRef();
-    }
-  }
+        GenericTypes(genericTypes) {}
 
-  ~LambdaExpression() {
-    for (auto &i : Parameters) {
-      if (i)
-        i->release();
-    }
-    if (Body)
-      Body->release();
-    if (ReturnType)
-      ReturnType->release();
-    for (auto &i : GenericTypes) {
-      if (i)
-        i->release();
-    }
-  }
+  ~LambdaExpression() = default; // No need for manual memory management
 };
 
 #endif // LAMBDA_EXPRESSION_H

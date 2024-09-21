@@ -4,56 +4,29 @@
 #include "ast_node.h"
 #include "parameter.h"
 #include "type_reference.h"
+#include <memory>
 #include <string>
 #include <vector>
+
 
 class FunctionDeclaration : public AstNode {
 public:
   std::string Name;
-  std::vector<Parameter *> Parameters;
-  TypeReference *ReturnType;
-  std::vector<AstNode *> Body;
-  std::vector<TypeReference *> GenericTypes;
+  std::vector<std::shared_ptr<Parameter>> Parameters;
+  std::shared_ptr<TypeReference> ReturnType;
+  std::vector<std::shared_ptr<AstNode>> Body;
+  std::vector<std::shared_ptr<TypeReference>> GenericTypes;
 
-  FunctionDeclaration(const std::string &name,
-                      const std::vector<Parameter *> &parameters,
-                      TypeReference *returnType,
-                      const std::vector<AstNode *> &body,
-                      const std::vector<TypeReference *> &genericTypes)
+  FunctionDeclaration(
+      const std::string &name,
+      const std::vector<std::shared_ptr<Parameter>> &parameters,
+      std::shared_ptr<TypeReference> returnType,
+      const std::vector<std::shared_ptr<AstNode>> &body,
+      const std::vector<std::shared_ptr<TypeReference>> &genericTypes)
       : Name(name), Parameters(parameters), ReturnType(returnType), Body(body),
-        GenericTypes(genericTypes) {
-    for (auto &i : Parameters) {
-      if (i)
-        i->addRef();
-    }
-    if (ReturnType)
-      ReturnType->addRef();
-    for (auto &i : Body) {
-      if (i)
-        i->addRef();
-    }
-    for (auto &i : GenericTypes) {
-      if (i)
-        i->addRef();
-    }
-  }
+        GenericTypes(genericTypes) {}
 
-  ~FunctionDeclaration() {
-    for (auto &i : Parameters) {
-      if (i)
-        i->release();
-    }
-    if (ReturnType)
-      ReturnType->release();
-    for (auto &i : Body) {
-      if (i)
-        i->release();
-    }
-    for (auto &i : GenericTypes) {
-      if (i)
-        i->release();
-    }
-  }
+  ~FunctionDeclaration() = default; // No need for manual memory management
 };
 
 #endif // FUNCTION_DECLARATION_H
